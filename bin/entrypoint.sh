@@ -1,9 +1,13 @@
 #!/usr/bin/env bash
 set -x
 
-JMX_PORT=9010
-HOST="0.0.0.0"
+set -e
+if [ -z $HOST ]; then
+	export $HOST=127.0.0.1
+fi
 
+# This has to match t he one exposed in Dockerfile, so no overriding...
+export JMX_PORT=30000
 java \
   -Dsun.management.jmxremote.level=FINEST \
   -Dsun.management.jmxremote.handlers=java.util.logging.ConsoleHandler \
@@ -13,8 +17,6 @@ java \
   -Dcom.sun.management.jmxremote.authenticate=false \
   -Dcom.sun.management.jmxremote.port=$JMX_PORT \
   -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT \
-  -Dcom.sun.management.jmxremote.host=$HOST \
   -Djava.rmi.server.hostname=$HOST \
-  -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 \
   -jar /opt/app/app.jar
 

@@ -13,7 +13,7 @@ ADD target/sample-app.jar /opt/app/app.jar
 ADD bin/entrypoint.sh /opt/app/entrypoint.sh
 
 # JMX
-EXPOSE 9010
+EXPOSE 30000
 
 # JVM debugging port
 EXPOSE 5005
